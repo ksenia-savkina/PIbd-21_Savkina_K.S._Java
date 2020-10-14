@@ -5,50 +5,50 @@ import java.awt.Graphics;
 import java.awt.Polygon;
 
 public class HoistingCrane {
-	// Левая координата отрисовки гусеничной машины
+	// Р›РµРІР°СЏ РєРѕРѕСЂРґРёРЅР°С‚Р° РѕС‚СЂРёСЃРѕРІРєРё РіСѓСЃРµРЅРёС‡РЅРѕР№ РјР°С€РёРЅС‹
 	private int _startPosX;
-	// Правая кооридната отрисовки гусеничной машины
+	// РџСЂР°РІР°СЏ РєРѕРѕСЂРёРґРЅР°С‚Р° РѕС‚СЂРёСЃРѕРІРєРё РіСѓСЃРµРЅРёС‡РЅРѕР№ РјР°С€РёРЅС‹
 	private int _startPosY;
-	// Ширина окна отрисовки
+	// РЁРёСЂРёРЅР° РѕРєРЅР° РѕС‚СЂРёСЃРѕРІРєРё
 	private int _pictureWidth;
-	// Высота окна отрисовки
+	// Р’С‹СЃРѕС‚Р° РѕРєРЅР° РѕС‚СЂРёСЃРѕРІРєРё
 	private int _pictureHeight;
-	// Ширина отрисовки гусеничной машины
+	// РЁРёСЂРёРЅР° РѕС‚СЂРёСЃРѕРІРєРё РіСѓСЃРµРЅРёС‡РЅРѕР№ РјР°С€РёРЅС‹
 	final int trackedVehicleWidth = 200;
-	// Высота отрисовки гусеничной машины
+	// Р’С‹СЃРѕС‚Р° РѕС‚СЂРёСЃРѕРІРєРё РіСѓСЃРµРЅРёС‡РЅРѕР№ РјР°С€РёРЅС‹
 	final int trackedVehicleHeight = 110;
-	// Высота отрисовки стрелы
+	// Р’С‹СЃРѕС‚Р° РѕС‚СЂРёСЃРѕРІРєРё СЃС‚СЂРµР»С‹
 	final int _arrowHeight = 230;
-	// Высота отрисовки кабины
+	// Р’С‹СЃРѕС‚Р° РѕС‚СЂРёСЃРѕРІРєРё РєР°Р±РёРЅС‹
 	final int _cabinHeight = 20;
-	// Высота отрисовки противовеса
+	// Р’С‹СЃРѕС‚Р° РѕС‚СЂРёСЃРѕРІРєРё РїСЂРѕС‚РёРІРѕРІРµСЃР°
 	final int _counterweightHeight = 70;
-	// Ширина отрисовки противовеса
+	// РЁРёСЂРёРЅР° РѕС‚СЂРёСЃРѕРІРєРё РїСЂРѕС‚РёРІРѕРІРµСЃР°
 	final int _counterweightWidth = 30;
-	// Основной цвет
+	// РћСЃРЅРѕРІРЅРѕР№ С†РІРµС‚
 	public Color mainColor;
-	// Дополнительный цвет
+	// Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Р№ С†РІРµС‚
 	public Color dopColor;
-	// Максимальная скорость гусеничной машины
+	// РњР°РєСЃРёРјР°Р»СЊРЅР°СЏ СЃРєРѕСЂРѕСЃС‚СЊ РіСѓСЃРµРЅРёС‡РЅРѕР№ РјР°С€РёРЅС‹
 	public int maxSpeed;
-	// Общая масса агрегата
+	// РћР±С‰Р°СЏ РјР°СЃСЃР° Р°РіСЂРµРіР°С‚Р°
 	public float weight;
-	// Признак наличия стрелы
+	// РџСЂРёР·РЅР°Рє РЅР°Р»РёС‡РёСЏ СЃС‚СЂРµР»С‹
 	public boolean arrow;
-	// Признак наличия противовеса
+	// РџСЂРёР·РЅР°Рє РЅР°Р»РёС‡РёСЏ РїСЂРѕС‚РёРІРѕРІРµСЃР°
 	public boolean counterweight;
 
 	private Rink rink;
 
-	// Конструктор
-	// "maxSpeed" Максимальная скорость(м/мин)
-	// "weight" Общая масса агрегата(т)
-	// "mainColor" Основной цвет
-	// "dopColor" Дополнительный цвет
+	// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
+	// "maxSpeed" РњР°РєСЃРёРјР°Р»СЊРЅР°СЏ СЃРєРѕСЂРѕСЃС‚СЊ(Рј/РјРёРЅ)
+	// "weight" РћР±С‰Р°СЏ РјР°СЃСЃР° Р°РіСЂРµРіР°С‚Р°(С‚)
+	// "mainColor" РћСЃРЅРѕРІРЅРѕР№ С†РІРµС‚
+	// "dopColor" Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Р№ С†РІРµС‚
 
-	// "cabin" Признак наличия кабины
-	// "arrow" Признак наличия стрелы
-	// "counterweight" Признак наличия противовеса(м)
+	// "cabin" РџСЂРёР·РЅР°Рє РЅР°Р»РёС‡РёСЏ РєР°Р±РёРЅС‹
+	// "arrow" РџСЂРёР·РЅР°Рє РЅР°Р»РёС‡РёСЏ СЃС‚СЂРµР»С‹
+	// "counterweight" РџСЂРёР·РЅР°Рє РЅР°Р»РёС‡РёСЏ РїСЂРѕС‚РёРІРѕРІРµСЃР°(Рј)
 	public HoistingCrane(int maxSpeed, float weight, Color mainColor, Color dopColor, boolean arrow,
 			boolean counterweight, int count) {
 		this.maxSpeed = maxSpeed;
@@ -60,11 +60,11 @@ public class HoistingCrane {
 		rink = new Rink(count);
 	}
 
-	// Установка позиции подъемного крана
-	// "x" Координата X
-	// "y" Координата Y
-	// "width" Ширина картинки
-	// "height" Высота картинки
+	// РЈСЃС‚Р°РЅРѕРІРєР° РїРѕР·РёС†РёРё РїРѕРґСЉРµРјРЅРѕРіРѕ РєСЂР°РЅР°
+	// "x" РљРѕРѕСЂРґРёРЅР°С‚Р° X
+	// "y" РљРѕРѕСЂРґРёРЅР°С‚Р° Y
+	// "width" РЁРёСЂРёРЅР° РєР°СЂС‚РёРЅРєРё
+	// "height" Р’С‹СЃРѕС‚Р° РєР°СЂС‚РёРЅРєРё
 	public void setPosition(int x, int y, int width, int height) {
 		_pictureHeight = height;
 		_pictureWidth = width;
@@ -81,11 +81,11 @@ public class HoistingCrane {
 		}
 	}
 
-	// Изменение направления перемещения
+	// РР·РјРµРЅРµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёСЏ РїРµСЂРјРµС‰РµРЅРёСЏ
 	public void moveCrane(Direction direction) {
 		float step = maxSpeed * 100 / weight;
 		switch (direction) {
-		// вправо
+		// РІРїСЂР°РІРѕ
 		case Right:
 			if (counterweight) {
 				if (_startPosX + step < _pictureWidth - (trackedVehicleWidth + _counterweightWidth)) {
@@ -97,13 +97,13 @@ public class HoistingCrane {
 				}
 			}
 			break;
-		// влево
+		// РІР»РµРІРѕ
 		case Left:
 			if (_startPosX - step > 0) {
 				_startPosX -= step;
 			}
 			break;
-		// вверх
+		// РІРІРµСЂС…
 		case Up:
 			if (arrow || counterweight) {
 				if (arrow || arrow && counterweight) {
@@ -121,7 +121,7 @@ public class HoistingCrane {
 				}
 			}
 			break;
-		// вниз
+		// РІРЅРёР·
 		case Down:
 			if (_startPosY + step < _pictureHeight - trackedVehicleHeight) {
 				_startPosY += step;
@@ -130,9 +130,9 @@ public class HoistingCrane {
 		}
 	}
 
-	// Отрисовка
+	// РћС‚СЂРёСЃРѕРІРєР°
 	public void drawCrane(Graphics g) {
-		// гусеничная машина
+		// РіСѓСЃРµРЅРёС‡РЅР°СЏ РјР°С€РёРЅР°
 		g.setColor(mainColor);
 		g.fillRect(_startPosX + 70, _startPosY, 130, 50);
 
