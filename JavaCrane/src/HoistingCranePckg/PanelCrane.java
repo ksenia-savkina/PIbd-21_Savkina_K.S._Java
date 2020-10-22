@@ -12,7 +12,7 @@ public class PanelCrane extends JPanel {
 		canDraw = CanDraw;
 	}
 
-	public void setTrackedVehicle(ICrane crane) {
+	public void setCrane(ICrane crane) {
 		this.crane = crane;
 	}
 

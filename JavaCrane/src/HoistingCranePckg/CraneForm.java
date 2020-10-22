@@ -176,7 +176,7 @@ public class CraneForm {
 		txtCount.setText(textTxtFld);
 		panel.drawCan(true);
 		crane = hcrane;
-		panel.setTrackedVehicle(crane);
+		panel.setCrane(crane);
 		crane.setPosition(rnd(0, 100), craneY, panel.getWidth(), panel.getHeight());
 		panel.repaint();
 	}
