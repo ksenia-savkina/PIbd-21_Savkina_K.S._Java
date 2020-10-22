@@ -9,15 +9,19 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import Enums.Direction;
+import Interfaces.ICrane;
+import Interfaces.IRink;
 
 public class CraneForm {
 
 	private JFrame frame;
 	private JTextField txtCount;
-	HoistingCrane crane;
-	Rink rink;
-	PanelCrane panel;
-	Integer k;
+	private JLabel label;
+	private ICrane crane;
+	private IRink rink;
+	private PanelCrane panel;
+	private Integer k;
 
 	/**
 	 * Launch the application.
@@ -42,46 +46,51 @@ public class CraneForm {
 		initialize();
 	}
 
-	public int rnd(int min, int max) {
-		max -= min;
-		return (int) (Math.random() * ++max) + min;
-	}
-
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
+		frame = new JFrame("Подъемный кран");
 		frame.setBounds(100, 100, 900, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
 		txtCount = new JTextField();
 		txtCount.setEditable(false);
-		txtCount.setBounds(10, 111, 86, 20);
+		txtCount.setBounds(5, 227, 100, 20);
 		frame.getContentPane().add(txtCount);
 		txtCount.setColumns(10);
 
-		k = rnd(4, 6);
-		crane = new HoistingCrane(rnd(1, 3), rnd(25, 50), Color.green, Color.gray, true, true, k);
-		panel = new PanelCrane(crane, false);
+		label = new JLabel();
+		label.setBounds(13, 166, 71, 50);
+		frame.getContentPane().add(label);
 
-		crane.setPosition(rnd(0, 100), rnd(20, 100), panel.getWidth(), panel.getHeight());
+		panel = new PanelCrane(false);
 		panel.setBackground(Color.WHITE);
 		panel.setBounds(108, 0, 651, 461);
 		frame.getContentPane().add(panel);
 
-		JButton btnCreate = new JButton("\u0421\u043E\u0437\u0434\u0430\u0442\u044C");
-		btnCreate.addActionListener(new ActionListener() {
+		JButton btnCreateTrackedVehicle = new JButton("<html>Создать гусеничную машину</html>");
+		btnCreateTrackedVehicle.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				panel.drawCan(true);
-				txtCount.setText(k.toString());
-				crane.setPosition(rnd(0, 100), rnd(20, 100), panel.getWidth(), panel.getHeight());
-				panel.repaint();
+				createObj("<html>Количетсво катков в гусеницах:</html>", "4",
+						new TrackedVehicle(rnd(1, 3), rnd(25, 50), Color.green), rnd(20, 100));
 			}
 		});
-		btnCreate.setBounds(10, 11, 89, 23);
-		frame.getContentPane().add(btnCreate);
+		btnCreateTrackedVehicle.setBounds(10, 11, 89, 59);
+		frame.getContentPane().add(btnCreateTrackedVehicle);
+
+		JButton btnCreateHoistingCrane = new JButton("<html>Создать подъемный кран</html>");
+		btnCreateHoistingCrane.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				k = rnd(4, 6);
+				createObj("<html>Количетсво катков в гусеницах:</html>", k.toString(),
+						new HoistingCrane(rnd(1, 3), rnd(25, 50), Color.green, Color.gray, true, true, k, 0),
+						rnd(230, 325));
+			}
+		});
+		btnCreateHoistingCrane.setBounds(10, 81, 89, 59);
+		frame.getContentPane().add(btnCreateHoistingCrane);
 
 		JButton btnLeft = new JButton();
 		btnLeft.addActionListener(new ActionListener() {
@@ -127,9 +136,53 @@ public class CraneForm {
 		btnDown.setIcon(new ImageIcon("img/down.jpg"));
 		frame.getContentPane().add(btnDown);
 
-		JLabel label = new JLabel(
-				"<html>\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u043A\u0430\u0442\u043A\u043E\u0432 \u0432 \u0433\u0443\u0441\u0435\u043D\u0438\u0446\u0430\u0445:");
-		label.setBounds(10, 50, 71, 50);
-		frame.getContentPane().add(label);
+		JButton btnAddDopRinks1 = new JButton("<html>Добавить фигуры на катках</html>");
+		btnAddDopRinks1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				k = rnd(1, 2);
+				String str;
+				if (k == 1)
+					str = "Круг";
+				else
+					str = "Квадрат";
+				createObj("<html>Тип фигуры</html>", str,
+						new HoistingCrane(rnd(1, 3), rnd(25, 50), Color.green, Color.gray, true, true, k, 1),
+						rnd(230, 325));
+			}
+		});
+		btnAddDopRinks1.setBounds(12, 302, 89, 59);
+		frame.getContentPane().add(btnAddDopRinks1);
+
+		JButton btnAddDopRinks2 = new JButton("<html>Добавить орнаменты на катках</html>");
+		btnAddDopRinks2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				k = rnd(1, 2);
+				String str;
+				if (k == 1)
+					str = "Орнамент № 1";
+				else
+					str = "Орнамент № 2";
+				createObj("<html>Тип орнамента</html>", str,
+						new HoistingCrane(rnd(1, 3), rnd(25, 50), Color.green, Color.gray, true, true, k, 2),
+						rnd(230, 325));
+			}
+		});
+		btnAddDopRinks2.setBounds(11, 366, 89, 59);
+		frame.getContentPane().add(btnAddDopRinks2);
+	}
+
+	private void createObj(String textLbl, String textTxtFld, ICrane hcrane, int craneY) {
+		label.setText(textLbl);
+		txtCount.setText(textTxtFld);
+		panel.drawCan(true);
+		crane = hcrane;
+		panel.setTrackedVehicle(crane);
+		crane.setPosition(rnd(0, 100), craneY, panel.getWidth(), panel.getHeight());
+		panel.repaint();
+	}
+
+	private int rnd(int min, int max) {
+		max -= min;
+		return (int) (Math.random() * ++max) + min;
 	}
 }

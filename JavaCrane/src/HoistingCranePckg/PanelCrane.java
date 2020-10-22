@@ -2,14 +2,18 @@ package HoistingCranePckg;
 
 import java.awt.Graphics;
 import javax.swing.JPanel;
+import Interfaces.ICrane;
 
 public class PanelCrane extends JPanel {
-	HoistingCrane crane;
+	private ICrane crane;
 	private boolean canDraw;
 
-	public PanelCrane(HoistingCrane hCrane, boolean CanDraw) {
-		crane = hCrane;
+	public PanelCrane(boolean CanDraw) {
 		canDraw = CanDraw;
+	}
+
+	public void setTrackedVehicle(ICrane crane) {
+		this.crane = crane;
 	}
 
 	public boolean drawCan(boolean can) {

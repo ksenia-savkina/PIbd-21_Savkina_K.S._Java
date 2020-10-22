@@ -2,11 +2,14 @@ package HoistingCranePckg;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import Enums.Rinks;
+import Interfaces.IRink;
 
-public class Rink {
+public class Rink implements IRink {
 
 	private Rinks kol;
 
+	@Override
 	public void setKol(int k) {
 		this.kol = Rinks.countRinks(k);
 	}
@@ -15,12 +18,13 @@ public class Rink {
 		setKol(k);
 	}
 
-	public void drawCount(int x, int y, int diameter, int count, Graphics g) {
+	private void drawCount(int x, int y, int diameter, int count, Graphics g) {
 		for (int i = 0; i < count; i++) {
 			g.fillOval(x + diameter * i, y, diameter, diameter);
 		}
 	}
 
+	@Override
 	public void drawRink(int x, int y, Graphics g, Color color) {
 		g.setColor(color);
 		switch (kol) {
