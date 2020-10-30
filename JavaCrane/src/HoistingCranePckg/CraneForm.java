@@ -1,7 +1,6 @@
 package HoistingCranePckg;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
@@ -23,37 +22,13 @@ public class CraneForm {
 	private PanelCrane panel;
 	private Integer k;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CraneForm window = new CraneForm();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
 	public CraneForm() {
-		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
 		frame = new JFrame("Подъемный кран");
-		frame.setBounds(100, 100, 900, 500);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setBounds(100, 100, 1330, 770);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setVisible(true);
+		frame.setResizable(false);
 
 		txtCount = new JTextField();
 		txtCount.setEditable(false);
@@ -67,7 +42,7 @@ public class CraneForm {
 
 		panel = new PanelCrane(false);
 		panel.setBackground(Color.WHITE);
-		panel.setBounds(108, 0, 651, 461);
+		panel.setBounds(108, 10, 1086, 722);
 		frame.getContentPane().add(panel);
 
 		JButton btnCreateTrackedVehicle = new JButton("<html>Создать гусеничную машину</html>");
@@ -99,7 +74,7 @@ public class CraneForm {
 				panel.repaint();
 			}
 		});
-		btnLeft.setBounds(764, 431, 30, 30);
+		btnLeft.setBounds(1204, 702, 30, 30);
 		btnLeft.setIcon(new ImageIcon("img/left.jpg"));
 		frame.getContentPane().add(btnLeft);
 
@@ -110,7 +85,7 @@ public class CraneForm {
 				panel.repaint();
 			}
 		});
-		btnRight.setBounds(844, 431, 30, 30);
+		btnRight.setBounds(1286, 702, 30, 30);
 		btnRight.setIcon(new ImageIcon("img/right.jpg"));
 		frame.getContentPane().add(btnRight);
 
@@ -121,7 +96,7 @@ public class CraneForm {
 				panel.repaint();
 			}
 		});
-		btnUp.setBounds(804, 391, 30, 30);
+		btnUp.setBounds(1246, 662, 30, 30);
 		btnUp.setIcon(new ImageIcon("img/up.jpg"));
 		frame.getContentPane().add(btnUp);
 
@@ -132,7 +107,7 @@ public class CraneForm {
 				panel.repaint();
 			}
 		});
-		btnDown.setBounds(804, 431, 30, 30);
+		btnDown.setBounds(1246, 702, 30, 30);
 		btnDown.setIcon(new ImageIcon("img/down.jpg"));
 		frame.getContentPane().add(btnDown);
 
@@ -169,12 +144,21 @@ public class CraneForm {
 		});
 		btnAddDopRinks2.setBounds(11, 366, 89, 59);
 		frame.getContentPane().add(btnAddDopRinks2);
+		frame.repaint();
+	}
+
+	// Передача крана на форму
+	public void setCrane(ICrane hcrane) {
+		crane = hcrane;
+		panel.setCrane(crane);
+		crane.setPosition(rnd(0, 100), rnd(230, 325), panel.getWidth(), panel.getHeight());
+		panel.repaint();
+		frame.repaint();
 	}
 
 	private void createObj(String textLbl, String textTxtFld, ICrane hcrane, int craneY) {
 		label.setText(textLbl);
 		txtCount.setText(textTxtFld);
-		panel.drawCan(true);
 		crane = hcrane;
 		panel.setCrane(crane);
 		crane.setPosition(rnd(0, 100), craneY, panel.getWidth(), panel.getHeight());

@@ -9,10 +9,12 @@ public interface ICrane {
 	// "y" Координата Y
 	// "width" Ширина картинки
 	// "height" Высота картинки
-    void setPosition(int x, int y, int width, int height);
-    // Изменение направления перемещения
-    // "direction" Направление
-    void moveCrane(Direction direction);
-    // Отрисовка
-    void drawCrane(Graphics g);
+	void setPosition(int x, int y, int width, int height);
+
+	// Изменение направления перемещения
+	// "direction" Направление
+	void moveCrane(Direction direction);
+
+	// Отрисовка
+	void drawCrane(Graphics g);
 }
