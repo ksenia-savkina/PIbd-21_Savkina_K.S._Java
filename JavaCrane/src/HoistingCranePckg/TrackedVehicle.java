@@ -69,11 +69,17 @@ public class TrackedVehicle extends Platform {
 		// гусеничная машина
 		g.setColor(mainColor);
 		g.fillRect(_startPosX + 70, _startPosY, 130, 50);
+		g.fillRect(_startPosX + 20, _startPosY - 20, 50, 70);
+
+		g.setColor(Color.blue);
+		g.fillRect(_startPosX + 30, _startPosY - 10, 30, 40);
 
 		g.setColor(Color.black);
 		g.drawRect(_startPosX + 70, _startPosY, 130, 50);
 		g.fillRect(_startPosX + 70, _startPosY + 50, 50, 10);
 		g.drawRect(_startPosX + 70, _startPosY + 50, 50, 10);
+		g.drawRect(_startPosX + 20, _startPosY - 20, 50, 70);
+		g.drawRect(_startPosX + 30, _startPosY - 10, 30, 40);
 
 		Polygon points = new Polygon();
 		points.addPoint(_startPosX, _startPosY + 70);
@@ -83,13 +89,6 @@ public class TrackedVehicle extends Platform {
 		points.addPoint(_startPosX + 170, _startPosY + 60);
 		points.addPoint(_startPosX + 20, _startPosY + 60);
 		g.fillPolygon(points);
-
-		g.drawRect(_startPosX + 20, _startPosY - 20, 50, 70);
-		g.drawRect(_startPosX + 30, _startPosY - 10, 30, 40);
-		g.setColor(mainColor);
-		g.fillRect(_startPosX + 20, _startPosY - 20, 50, 70);
-		g.setColor(Color.blue);
-		g.fillRect(_startPosX + 30, _startPosY - 10, 30, 40);
 
 		g.setColor(Color.darkGray);
 		if (isBaseRinks) {
