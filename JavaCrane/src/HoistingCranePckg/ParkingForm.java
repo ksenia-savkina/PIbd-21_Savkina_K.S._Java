@@ -33,9 +33,9 @@ public class ParkingForm {
 	private final Stack<Platform> platformStack;
 
 	public ParkingForm() {
-		
+
 		platformStack = new Stack<>();
-		
+
 		frame = new JFrame("Стоянка");
 		frame.setBounds(50, 50, 1330, 770);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,16 +56,16 @@ public class ParkingForm {
 		panel.setBackground(Color.WHITE);
 		panel.setBounds(10, 10, 1086, 713);
 		frame.getContentPane().add(panel);
-		
+
 		parkingCollection = new ParkingCollection(panel.getWidth(), panel.getHeight());
 		panel.setParkingCollection(parkingCollection);
-		
+
 		listParkingsModel = new DefaultListModel();
 		listParkings = new JList(listParkingsModel);
 		listParkings.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
-                panel.setSelectedItem(listParkings.getSelectedValue());
-                panel.repaint();
+			public void valueChanged(ListSelectionEvent e) {
+				panel.setSelectedItem(listParkings.getSelectedValue());
+				panel.repaint();
 			}
 		});
 		listParkings.setBounds(1152, 125, 110, 59);
@@ -216,7 +216,7 @@ public class ParkingForm {
 		});
 		btnDelParking.setBounds(1148, 206, 136, 20);
 		frame.getContentPane().add(btnDelParking);
-		
+
 		JButton btnAddToStack = new JButton("<html>Добавить в стек</html>");
 		btnAddToStack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -233,7 +233,7 @@ public class ParkingForm {
 		});
 		btnAddToStack.setBounds(1106, 554, 101, 47);
 		frame.getContentPane().add(btnAddToStack);
-		
+
 		JButton btnRemoveFromStack = new JButton("<html>Извлечь из стека</html>");
 		btnRemoveFromStack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -241,8 +241,8 @@ public class ParkingForm {
 					CraneForm form = new CraneForm();
 					form.setCrane(Objects.requireNonNull(platformStack.pop()));
 					panel.repaint();
-		            frame.repaint();
-		        }
+					frame.repaint();
+				}
 			}
 		});
 		btnRemoveFromStack.setBounds(1217, 554, 101, 47);

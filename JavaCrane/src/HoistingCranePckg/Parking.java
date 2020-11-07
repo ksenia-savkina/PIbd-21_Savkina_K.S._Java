@@ -75,7 +75,7 @@ public class Parking<T extends ICrane, I extends IRink> {
 		int placesWidth = pictureWidth / _placeSizeWidth;
 		for (int i = 0; i < _places.size(); ++i) {
 			_places.get(i).setPosition(x + (_placeSizeWidth + interval) * (i % placesWidth),
-					y + _placeSizeHeight * (i / placesWidth), pictureWidth, pictureHeight);			
+					y + _placeSizeHeight * (i / placesWidth), pictureWidth, pictureHeight);
 			_places.get(i).drawCrane(g);
 		}
 	}

@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 import Interfaces.ICrane;
 
 public class PanelParking extends JPanel {
-	
+
 	private ICrane crane;
 	private Parking parking;
 	private boolean craneIsSet;

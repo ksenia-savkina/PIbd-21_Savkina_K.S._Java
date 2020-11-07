@@ -6,7 +6,7 @@ import java.util.Set;
 import Interfaces.IRink;
 
 public class ParkingCollection {
-	
+
 	// Словарь (хранилище) со стоянками
 	private final Map<String, Parking<Platform, IRink>> parkingStages;
 	// Ширина окна отрисовки
