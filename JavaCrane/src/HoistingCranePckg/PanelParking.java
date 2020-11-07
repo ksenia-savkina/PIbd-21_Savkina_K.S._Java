@@ -5,14 +5,17 @@ import javax.swing.JPanel;
 import Interfaces.ICrane;
 
 public class PanelParking extends JPanel {
+	
 	private ICrane crane;
+	private Parking parking;
 	private boolean craneIsSet;
-	private boolean parkingIsSet;
-	private Parking<TrackedVehicle, Rink> parking;
+	private boolean parkingCollectionIsSet;
+	private String selectedItem = null;
+	private ParkingCollection parkingCollection;
 
-	public PanelParking(boolean craneIsSet, boolean parkingIsSet) {
+	public PanelParking(boolean craneIsSet, boolean parkingCollectionIsSet) {
 		this.craneIsSet = craneIsSet;
-		this.parkingIsSet = parkingIsSet;
+		this.parkingCollectionIsSet = parkingCollectionIsSet;
 	}
 
 	public void setCrane(ICrane crane) {
@@ -20,9 +23,13 @@ public class PanelParking extends JPanel {
 		craneIsSet = true;
 	}
 
-	public void setParking(Parking<TrackedVehicle, Rink> parking) {
-		this.parking = parking;
-		parkingIsSet = true;
+	public void setParkingCollection(ParkingCollection parkingCollection) {
+		this.parkingCollection = parkingCollection;
+		parkingCollectionIsSet = true;
+	}
+
+	public void setSelectedItem(String selectedItem) {
+		this.selectedItem = selectedItem;
 	}
 
 	@Override
@@ -31,8 +38,10 @@ public class PanelParking extends JPanel {
 		if (craneIsSet) {
 			crane.drawCrane(g);
 		}
-		if (parkingIsSet) {
-			parking.draw(g);
+		if (selectedItem != null) {
+			if (parkingCollectionIsSet) {
+				parkingCollection.get(selectedItem).draw(g);
+			}
 		}
 	}
 }
