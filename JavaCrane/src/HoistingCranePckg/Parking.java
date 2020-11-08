@@ -8,6 +8,7 @@ import Interfaces.ICrane;
 import Interfaces.IRink;
 
 public class Parking<T extends ICrane, I extends IRink> {
+	
 	// Список объектов, которые храним
 	private final List<T> _places;
 	// Максимальное количество мест на стоянке
