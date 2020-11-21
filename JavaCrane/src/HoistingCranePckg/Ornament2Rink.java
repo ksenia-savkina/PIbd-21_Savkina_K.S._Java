@@ -36,7 +36,6 @@ public class Ornament2Rink implements IRink {
 
 	@Override
 	public void drawRink(int x, int y, Graphics g, Color color) {
-		g.setColor(color);
 		switch (kol) {
 		case Four:
 			drawCount(x, y, 47, 4, color, g);
