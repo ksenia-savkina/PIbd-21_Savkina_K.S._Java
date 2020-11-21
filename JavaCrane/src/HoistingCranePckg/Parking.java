@@ -2,13 +2,15 @@ package HoistingCranePckg;
 
 import java.awt.Color;
 import java.awt.Graphics;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import Interfaces.ICrane;
 import Interfaces.IRink;
 
 public class Parking<T extends ICrane, I extends IRink> {
-	
+
 	// Список объектов, которые храним
 	private final List<T> _places;
 	// Максимальное количество мест на стоянке
@@ -87,7 +89,7 @@ public class Parking<T extends ICrane, I extends IRink> {
 		int interval = 35;
 		g.setColor(Color.black);
 		for (int i = 0; i < pictureWidth / _placeSizeWidth; i++) {
-			for (int j = 0; j < pictureHeight / _placeSizeHeight + 1; ++j) {// линия рамзетки места
+			for (int j = 0; j < pictureHeight / _placeSizeHeight + 1; ++j) {// линия разметки места
 				g.drawLine(x + (_placeSizeWidth + interval) * i, j * _placeSizeHeight,
 						x + _placeSizeWidth + (_placeSizeWidth + interval) * i, j * _placeSizeHeight);
 			}

@@ -1,13 +1,14 @@
-package HoistingCranePckg;
+package Frames;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.util.Objects;
 import java.util.Stack;
+
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -16,14 +17,16 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.JList;
 
+import HoistingCranePckg.ParkingCollection;
+import HoistingCranePckg.Platform;
+
+import Panels.PanelParking;
+
 public class ParkingForm {
 
 	private JFrame frame;
 	private PanelParking panel;
 	private JTextField txtFldPlace;
-	private JTextField txtCount;
-	private JLabel label;
-	private Integer k;
 	private JTextField txtFldNumber;
 	private JButton btnMore;
 	private JTextField txtNewLevelName;
@@ -42,17 +45,7 @@ public class ParkingForm {
 		frame.getContentPane().setLayout(null);
 		frame.setVisible(true);
 
-		txtCount = new JTextField();
-		txtCount.setEditable(false);
-		txtCount.setBounds(1162, 437, 100, 20);
-		frame.getContentPane().add(txtCount);
-		txtCount.setColumns(10);
-
-		label = new JLabel();
-		label.setBounds(1181, 388, 71, 50);
-		frame.getContentPane().add(label);
-
-		panel = new PanelParking(false, false);
+		panel = new PanelParking(false);
 		panel.setBackground(Color.WHITE);
 		panel.setBounds(10, 10, 1086, 713);
 		frame.getContentPane().add(panel);
@@ -71,76 +64,35 @@ public class ParkingForm {
 		listParkings.setBounds(1152, 125, 110, 59);
 		frame.getContentPane().add(listParkings);
 
-		JButton btnSetTrackedVehicle = new JButton("<html>Припарковать гусеничную машину</html>");
-		btnSetTrackedVehicle.addActionListener(new ActionListener() {
+		JButton btnSetCrane = new JButton("Добавить кран");
+		btnSetCrane.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (listParkings.getSelectedIndex() > -1) {
-					JColorChooser dialog = new JColorChooser();
-					JOptionPane.showMessageDialog(frame, dialog);
-					if (dialog.getColor() != null) {
-						TrackedVehicle crane = new TrackedVehicle(100, 1000, dialog.getColor());
-						if (parkingCollection.get(listParkings.getSelectedValue()).addition(crane)) {
-							panel.setCrane(crane);
-							panel.repaint();
-						} else {
-							JOptionPane.showMessageDialog(frame, "Стоянка переполнена");
-						}
-					}
-				}
+				openCraneConfigFrame();
 			}
 		});
-		btnSetTrackedVehicle.setBounds(1148, 256, 145, 47);
-		frame.getContentPane().add(btnSetTrackedVehicle);
-
-		JButton btnSetHoistingCrane = new JButton("<html>Припарковать подъемный кран</html>");
-		btnSetHoistingCrane.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if (listParkings.getSelectedIndex() > -1) {
-					k = rnd(4, 6);
-					JColorChooser dialog = new JColorChooser();
-					JOptionPane.showMessageDialog(frame, dialog);
-					if (dialog.getColor() != null) {
-						JColorChooser dialogDop = new JColorChooser();
-						JOptionPane.showMessageDialog(frame, dialogDop);
-						if (dialogDop.getColor() != null) {
-							TrackedVehicle crane = new HoistingCrane(100, 1000, dialog.getColor(), dialogDop.getColor(),
-									true, true, k, 0);
-							if (parkingCollection.get(listParkings.getSelectedValue()).addition(crane)) {
-								label.setText("<html>Количетсво катков в гусеницах:</html>");
-								txtCount.setText(k.toString());
-								panel.setCrane(crane);
-								panel.repaint();
-							} else {
-								JOptionPane.showMessageDialog(frame, "Стоянка переполнена");
-							}
-						}
-					}
-				}
-			}
-		});
-		btnSetHoistingCrane.setBounds(1148, 331, 145, 47);
-		frame.getContentPane().add(btnSetHoistingCrane);
+		btnSetCrane.setBounds(1140, 246, 153, 30);
+		frame.getContentPane().add(btnSetCrane);
 
 		JLabel lblTakeCrane = new JLabel("Забрать кран");
-		lblTakeCrane.setBounds(1180, 479, 81, 30);
+		lblTakeCrane.setBounds(1178, 306, 81, 30);
 		frame.getContentPane().add(lblTakeCrane);
 
 		JLabel lblPlace = new JLabel("Место: ");
-		lblPlace.setBounds(1159, 513, 52, 30);
+		lblPlace.setBounds(1157, 340, 52, 30);
 		frame.getContentPane().add(lblPlace);
 
 		txtFldPlace = new JTextField();
-		txtFldPlace.setBounds(1235, 519, 58, 19);
+		txtFldPlace.setBounds(1233, 346, 58, 19);
 		frame.getContentPane().add(txtFldPlace);
 		txtFldPlace.setColumns(10);
 
 		JLabel lblCompare = new JLabel("<html>Количество занятых мест меньше или больше введеного числа?</html>");
-		lblCompare.setBounds(1124, 617, 192, 50);
+		lblCompare.setBounds(1122, 444, 192, 50);
 		frame.getContentPane().add(lblCompare);
 
 		txtFldNumber = new JTextField();
 		txtFldNumber.setColumns(10);
-		txtFldNumber.setBounds(1124, 689, 58, 19);
+		txtFldNumber.setBounds(1122, 516, 58, 19);
 		frame.getContentPane().add(txtFldNumber);
 
 		btnMore = new JButton(">");
@@ -154,7 +106,7 @@ public class ParkingForm {
 				}
 			}
 		});
-		btnMore.setBounds(1193, 677, 85, 21);
+		btnMore.setBounds(1191, 504, 85, 21);
 		frame.getContentPane().add(btnMore);
 
 		JButton btnLess = new JButton("<");
@@ -168,7 +120,7 @@ public class ParkingForm {
 				}
 			}
 		});
-		btnLess.setBounds(1193, 702, 85, 21);
+		btnLess.setBounds(1191, 529, 85, 21);
 		frame.getContentPane().add(btnLess);
 
 		JLabel lblNewLevelName = new JLabel("Стоянки:");
@@ -225,13 +177,12 @@ public class ParkingForm {
 							.subtraction(Integer.valueOf(txtFldPlace.getText()));
 					if (crane != null) {
 						platformStack.add(crane);
-						frame.repaint();
 					}
 					panel.repaint();
 				}
 			}
 		});
-		btnAddToStack.setBounds(1106, 554, 101, 47);
+		btnAddToStack.setBounds(1104, 381, 101, 47);
 		frame.getContentPane().add(btnAddToStack);
 
 		JButton btnRemoveFromStack = new JButton("<html>Извлечь из стека</html>");
@@ -241,18 +192,13 @@ public class ParkingForm {
 					CraneForm form = new CraneForm();
 					form.setCrane(Objects.requireNonNull(platformStack.pop()));
 					panel.repaint();
-					frame.repaint();
 				}
 			}
 		});
-		btnRemoveFromStack.setBounds(1217, 554, 101, 47);
+		btnRemoveFromStack.setBounds(1215, 381, 101, 47);
 		frame.getContentPane().add(btnRemoveFromStack);
-		frame.repaint();
-	}
 
-	private int rnd(int min, int max) {
-		max -= min;
-		return (int) (Math.random() * ++max) + min;
+		frame.repaint();
 	}
 
 	private void reloadLevels() {
@@ -269,5 +215,19 @@ public class ParkingForm {
 			listParkings.setSelectedIndex(index);
 		}
 		panel.repaint();
+	}
+
+	public void addCrane(Platform crane) {
+		if (crane != null && listParkings.getSelectedIndex() > -1) {
+			if (parkingCollection.get(listParkings.getSelectedValue()).addition(crane)) {
+				panel.repaint();
+			} else {
+				JOptionPane.showMessageDialog(frame, "Кран не удалось поставить");
+			}
+		}
+	}
+
+	private void openCraneConfigFrame() {
+		CraneConfigForm formCraneConfig = new CraneConfigForm(this);
 	}
 }

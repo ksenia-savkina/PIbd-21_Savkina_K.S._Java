@@ -3,6 +3,7 @@ package HoistingCranePckg;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Polygon;
+
 import Enums.Direction;
 
 public class TrackedVehicle extends Platform {

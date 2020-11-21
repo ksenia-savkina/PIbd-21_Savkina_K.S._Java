@@ -3,7 +3,9 @@ package HoistingCranePckg;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Polygon;
+
 import Enums.Direction;
+
 import Interfaces.IRink;
 
 public class HoistingCrane extends TrackedVehicle {
@@ -32,34 +34,25 @@ public class HoistingCrane extends TrackedVehicle {
 	// "arrow" Признак наличия стрелы
 	// "counterweight" Признак наличия противовеса(м)
 	public HoistingCrane(int maxSpeed, float weight, Color mainColor, Color dopColor, boolean arrow,
-			boolean counterweight, int count, int dop) {
-		super(maxSpeed, weight, mainColor, 200, 110, getBaseRinks(dop));
+			boolean counterweight, int count, String dop) {
+		super(maxSpeed, weight, mainColor, 200, 110, false);
 		this.dopColor = dopColor;
 		this.arrow = arrow;
 		this.counterweight = counterweight;
 		switch (dop) {
-		case 0:
+		case "Обыкновенные катки":
 			rink = new Rink(count);
 			break;
-		case 1:
-			rink = new FigureRink(count);
+		case "Круги на катках":
+			rink = new CircleRink(count);
 			break;
-		case 2:
-			rink = new OrnamentRink(count);
+		case "Орнамент №1 на катках":
+			rink = new Ornament1Rink(count);
+			break;
+		case "Орнамент №2 на катках":
+			rink = new Ornament2Rink(count);
 			break;
 		}
-	}
-
-	private static boolean getBaseRinks(int k) {
-		switch (k) {
-		case 0:
-			return false;
-		case 1:
-			return true;
-		case 2:
-			return true;
-		}
-		return false;
 	}
 
 	@Override
@@ -168,5 +161,13 @@ public class HoistingCrane extends TrackedVehicle {
 			g.drawLine(_startPosX + 46, _startPosY - 50, _startPosX + 70, _startPosY - 10);
 			g.drawLine(_startPosX + 59, _startPosY - 10, _startPosX + 70, _startPosY - 50);
 		}
+	}
+
+	public void setDopColor(Color color) {
+		dopColor = color;
+	}
+
+	public void setIRink(IRink rink) {
+		this.rink = rink;
 	}
 }
