@@ -70,15 +70,13 @@ public class ParkingCollection {
 			fw.write("Parking" + separator + level + "\n");
 			ICrane crane = null;
 			for (int i = 0; (crane = parkingStages.get(level).get(i)) != null; i++) {
-				if (crane != null) {
-					if (crane.getClass().toString().equals("class HoistingCranePckg.TrackedVehicle")) {
-						fw.write("TrackedVehicle" + separator);
-					}
-					if (crane.getClass().toString().equals("class HoistingCranePckg.HoistingCrane")) {
-						fw.write("HoistingCrane" + separator);
-					}
-					fw.write(crane + "\n");
+				if (crane.getClass().toString().equals("class HoistingCranePckg.TrackedVehicle")) {
+					fw.write("TrackedVehicle" + separator);
 				}
+				if (crane.getClass().toString().equals("class HoistingCranePckg.HoistingCrane")) {
+					fw.write("HoistingCrane" + separator);
+				}
+				fw.write(crane + "\n");
 			}
 		}
 		fw.close();
@@ -138,15 +136,13 @@ public class ParkingCollection {
 			fw.write("Parking" + separator + name + "\n");
 			ICrane crane = null;
 			for (int i = 0; (crane = level.get(i)) != null; i++) {
-				if (crane != null) {
-					if (crane.getClass().toString().equals("class HoistingCranePckg.TrackedVehicle")) {
-						fw.write("TrackedVehicle" + separator);
-					}
-					if (crane.getClass().toString().equals("class HoistingCranePckg.HoistingCrane")) {
-						fw.write("HoistingCrane" + separator);
-					}
-					fw.write(crane + "\n");
+				if (crane.getClass().toString().equals("class HoistingCranePckg.TrackedVehicle")) {
+					fw.write("TrackedVehicle" + separator);
 				}
+				if (crane.getClass().toString().equals("class HoistingCranePckg.HoistingCrane")) {
+					fw.write("HoistingCrane" + separator);
+				}
+				fw.write(crane + "\n");
 			}
 			fw.close();
 			return true;
