@@ -53,7 +53,7 @@ public class Parking<T extends ICrane, I extends IRink> {
 	// "p" Стоянка
 	// "index" Индекс места, с которого пытаемся извлечь объект
 	public T subtraction(int index) {
-		if (index < -1 || index > _places.size()) {
+		if (index < -1 || index >= _places.size()) {
 			return null;
 		}
 		T crane = _places.get(index);
@@ -103,5 +103,9 @@ public class Parking<T extends ICrane, I extends IRink> {
 			return _places.get(index);
 		}
 		return null;
+	}
+	
+	public void clear() {
+		_places.clear();
 	}
 }

@@ -238,18 +238,21 @@ public class CraneConfigForm {
 				if (crane instanceof HoistingCrane) {
 					HoistingCrane tempCrane = (HoistingCrane) crane;
 					tempCrane.setIRink(new CircleRink((Integer) spinnerCountRinks.getValue()));
+					tempCrane.setCountAndDop((Integer) spinnerCountRinks.getValue(), "Круги на катках");
 					crane = tempCrane;
 				}
 			} else if (lblPictureBox.getText().equals("Орнамент №1 на катках")) {
 				if (crane instanceof HoistingCrane) {
 					HoistingCrane tempCrane = (HoistingCrane) crane;
 					tempCrane.setIRink(new Ornament1Rink((Integer) spinnerCountRinks.getValue()));
+					tempCrane.setCountAndDop((Integer) spinnerCountRinks.getValue(), "Орнамент №1 на катках");
 					crane = tempCrane;
 				}
 			} else if (lblPictureBox.getText().equals("Орнамент №2 на катках")) {
 				if (crane instanceof HoistingCrane) {
 					HoistingCrane tempCrane = (HoistingCrane) crane;
 					tempCrane.setIRink(new Ornament2Rink((Integer) spinnerCountRinks.getValue()));
+					tempCrane.setCountAndDop((Integer) spinnerCountRinks.getValue(), "Орнамент №2 на катках");
 					crane = tempCrane;
 				}
 			}

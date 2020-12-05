@@ -16,6 +16,9 @@ public class TrackedVehicle extends Platform {
 
 	protected boolean isBaseRinks = true;
 
+	// Разделитель для записи информации по объекту в файл
+	protected final String separator = ";";
+
 	public TrackedVehicle(int maxSpeed, float weight, Color mainColor) {
 		this.maxSpeed = maxSpeed;
 		this.weight = weight;
@@ -30,6 +33,15 @@ public class TrackedVehicle extends Platform {
 		this.trackedVehicleWidth = trackedVehicleWidth;
 		this.trackedVehicleHeight = trackedVehicleHeight;
 		this.isBaseRinks = isBaseRinks;
+	}
+
+	public TrackedVehicle(String info) {
+		String[] strs = info.split(separator);
+		if (strs.length == 3) {
+			maxSpeed = Integer.parseInt(strs[0]);
+			weight = Float.parseFloat(strs[1]);
+			mainColor = new Color(Integer.parseInt(strs[2]));
+		}
 	}
 
 	@Override
@@ -97,5 +109,10 @@ public class TrackedVehicle extends Platform {
 				g.fillOval(_startPosX + 47 * i, _startPosY + 63, 47, 47);
 			}
 		}
+	}
+
+	@Override
+	public String toString() {
+		return maxSpeed + separator + weight + separator + mainColor.getRGB();
 	}
 }

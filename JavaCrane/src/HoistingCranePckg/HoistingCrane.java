@@ -3,6 +3,7 @@ package HoistingCranePckg;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Polygon;
+import java.lang.reflect.Field;
 
 import Enums.Direction;
 
@@ -23,6 +24,10 @@ public class HoistingCrane extends TrackedVehicle {
 	public boolean counterweight;
 
 	private IRink rink;
+	
+	private int count;
+	
+	private String dop; 
 
 	// Конструктор
 	// "maxSpeed" Максимальная скорость(м/мин)
@@ -42,16 +47,54 @@ public class HoistingCrane extends TrackedVehicle {
 		switch (dop) {
 		case "Обыкновенные катки":
 			rink = new Rink(count);
+			this.count = count;
+			this.dop = dop;
 			break;
 		case "Круги на катках":
 			rink = new CircleRink(count);
+			this.count = count;
+			this.dop = dop;
 			break;
 		case "Орнамент №1 на катках":
 			rink = new Ornament1Rink(count);
+			this.count = count;
+			this.dop = dop;
 			break;
 		case "Орнамент №2 на катках":
 			rink = new Ornament2Rink(count);
+			this.count = count;
+			this.dop = dop;
 			break;
+		}
+	}
+
+	public HoistingCrane(String info) {
+		super(info);
+		isBaseRinks = false;
+		String[] strs = info.split(separator);
+		if (strs.length == 8) {
+			maxSpeed = Integer.parseInt(strs[0]);
+			weight = Float.parseFloat(strs[1]);
+			mainColor = new Color(Integer.parseInt(strs[2]));
+			dopColor = new Color(Integer.parseInt(strs[3]));
+			arrow = Boolean.valueOf(strs[4]);
+			counterweight = Boolean.valueOf(strs[5]);
+			count = Integer.parseInt(strs[6]);
+			dop = strs[7];
+			switch (dop) {
+			case "Обыкновенные катки":
+				rink = new Rink(count);
+				break;
+			case "Круги на катках":
+				rink = new CircleRink(count);
+				break;
+			case "Орнамент №1 на катках":
+				rink = new Ornament1Rink(count);
+				break;
+			case "Орнамент №2 на катках":
+				rink = new Ornament2Rink(count);
+				break;
+			}
 		}
 	}
 
@@ -170,4 +213,14 @@ public class HoistingCrane extends TrackedVehicle {
 	public void setIRink(IRink rink) {
 		this.rink = rink;
 	}
+	
+	public void setCountAndDop(int count, String dop) {
+		this.count = count;
+		this.dop = dop;
+	}
+	
+	@Override
+	public String toString() {
+        return super.toString() + separator + dopColor.getRGB() + separator + arrow + separator + counterweight + separator + count + separator + dop;
+    }
 }

@@ -3,24 +3,29 @@ package Frames;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.io.IOException;
 import java.util.Objects;
 import java.util.Stack;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JList;
+import javax.swing.JMenu;
 
 import HoistingCranePckg.ParkingCollection;
 import HoistingCranePckg.Platform;
 
 import Panels.PanelParking;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 public class ParkingForm {
 
@@ -40,14 +45,14 @@ public class ParkingForm {
 		platformStack = new Stack<>();
 
 		frame = new JFrame("Стоянка");
-		frame.setBounds(50, 50, 1330, 770);
+		frame.setBounds(90, 20, 1330, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setVisible(true);
 
 		panel = new PanelParking(false);
 		panel.setBackground(Color.WHITE);
-		panel.setBounds(10, 10, 1086, 713);
+		panel.setBounds(10, 42, 1086, 711);
 		frame.getContentPane().add(panel);
 
 		parkingCollection = new ParkingCollection(panel.getWidth(), panel.getHeight());
@@ -61,7 +66,7 @@ public class ParkingForm {
 				panel.repaint();
 			}
 		});
-		listParkings.setBounds(1152, 125, 110, 59);
+		listParkings.setBounds(1152, 125, 110, 89);
 		frame.getContentPane().add(listParkings);
 
 		JButton btnSetCrane = new JButton("Добавить кран");
@@ -70,7 +75,7 @@ public class ParkingForm {
 				openCraneConfigFrame();
 			}
 		});
-		btnSetCrane.setBounds(1140, 246, 153, 30);
+		btnSetCrane.setBounds(1138, 266, 153, 30);
 		frame.getContentPane().add(btnSetCrane);
 
 		JLabel lblTakeCrane = new JLabel("Забрать кран");
@@ -166,7 +171,7 @@ public class ParkingForm {
 
 			}
 		});
-		btnDelParking.setBounds(1148, 206, 136, 20);
+		btnDelParking.setBounds(1140, 236, 136, 20);
 		frame.getContentPane().add(btnDelParking);
 
 		JButton btnAddToStack = new JButton("<html>Добавить в стек</html>");
@@ -197,6 +202,117 @@ public class ParkingForm {
 		});
 		btnRemoveFromStack.setBounds(1215, 381, 101, 47);
 		frame.getContentPane().add(btnRemoveFromStack);
+		
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBounds(10, 10, 1086, 22);
+		frame.getContentPane().add(menuBar);
+		
+		JMenu fileMenu = new JMenu("Файл");
+        menuBar.add(fileMenu);
+        
+        JMenuItem menuItemSave = new JMenuItem("Сохранить");
+        menuItemSave.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+            	JFileChooser fileChooser = new JFileChooser();
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("Text File", "txt");
+                fileChooser.setFileFilter(filter);
+                int result = fileChooser.showDialog(frame, "Сохраннить парковки");
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    String filename = fileChooser.getSelectedFile().toString();
+                    if (filename.contains(".txt")) {
+                        try {
+        					parkingCollection.saveData(filename);
+        				} catch (IOException e) {
+        					e.printStackTrace();
+        				}
+                    } else {
+                    	try {
+        					parkingCollection.saveData(filename + ".txt");
+        				} catch (IOException e) {
+        					e.printStackTrace();
+        				}
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Не удалось сохранить файл");
+                }
+            }
+        });
+        fileMenu.add(menuItemSave);
+        
+        JMenuItem menuItemLoad = new JMenuItem("Загрузить");
+        menuItemLoad.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+            	 JFileChooser fileChooser = new JFileChooser();
+                 FileNameExtensionFilter filter = new FileNameExtensionFilter("Text File", "txt");
+                 fileChooser.setFileFilter(filter);
+                 int result = fileChooser.showOpenDialog(frame);
+                 if (result == JFileChooser.APPROVE_OPTION) {
+                     String filename = fileChooser.getSelectedFile().toString();
+                     try {
+						parkingCollection.loadData(filename);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+                     reloadLevels();
+                     frame.repaint();
+                 } else {
+                     JOptionPane.showMessageDialog(frame, "Не удалось загрузить файл");
+                 }
+            }
+        });
+        fileMenu.add(menuItemLoad);
+        
+        JMenuItem menuItemSaveSeparateParking = new JMenuItem("Сохранить текущую парковку");
+        menuItemSaveSeparateParking.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+            	JFileChooser fileChooser = new JFileChooser();
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("Text File", "txt");
+                fileChooser.setFileFilter(filter);
+                int result = fileChooser.showDialog(frame, "Сохраннить парковку");
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    String filename = fileChooser.getSelectedFile().toString();
+                    if (filename.contains(".txt")) {
+                        try {
+        					parkingCollection.saveSeparateParking(filename, listParkings.getSelectedValue());
+        				} catch (IOException e) {
+        					e.printStackTrace();
+        				}
+                    } else {
+                    	try {
+        					parkingCollection.saveSeparateParking(filename + ".txt", listParkings.getSelectedValue());
+        				} catch (IOException e) {
+        					e.printStackTrace();
+        				}
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Не удалось сохранить файл");
+                }
+            }
+        });
+        fileMenu.add(menuItemSaveSeparateParking);
+        
+        JMenuItem menuItemLoadSeparateParking = new JMenuItem("Загрузить отдельную парковку");
+        menuItemLoadSeparateParking.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+            	 JFileChooser fileChooser = new JFileChooser();
+                 FileNameExtensionFilter filter = new FileNameExtensionFilter("Text File", "txt");
+                 fileChooser.setFileFilter(filter);
+                 int result = fileChooser.showOpenDialog(frame);
+                 if (result == JFileChooser.APPROVE_OPTION) {
+                     String filename = fileChooser.getSelectedFile().toString();
+                     try {
+						parkingCollection.loadSeparateParking(filename);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+                     reloadLevels();
+                     frame.repaint();
+                 } else {
+                     JOptionPane.showMessageDialog(frame, "Не удалось загрузить файл");
+                 }
+            }
+        });
+        fileMenu.add(menuItemLoadSeparateParking);
 
 		frame.repaint();
 	}
