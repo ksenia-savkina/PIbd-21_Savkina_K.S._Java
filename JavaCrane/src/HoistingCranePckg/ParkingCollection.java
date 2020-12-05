@@ -1,6 +1,5 @@
 package HoistingCranePckg;
 
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -154,7 +153,7 @@ public class ParkingCollection {
 		}
 		return false;
 	}
-	
+
 	public boolean loadSeparateParking(String filename) throws IOException {
 		FileReader fr = new FileReader(filename);
 		Scanner scanner = new Scanner(fr);
@@ -202,5 +201,4 @@ public class ParkingCollection {
 		}
 		return false;
 	}
-
 }

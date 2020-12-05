@@ -3,7 +3,6 @@ package HoistingCranePckg;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Polygon;
-import java.lang.reflect.Field;
 
 import Enums.Direction;
 
@@ -24,10 +23,10 @@ public class HoistingCrane extends TrackedVehicle {
 	public boolean counterweight;
 
 	private IRink rink;
-	
+
 	private int count;
-	
-	private String dop; 
+
+	private String dop;
 
 	// Конструктор
 	// "maxSpeed" Максимальная скорость(м/мин)
@@ -213,14 +212,15 @@ public class HoistingCrane extends TrackedVehicle {
 	public void setIRink(IRink rink) {
 		this.rink = rink;
 	}
-	
+
 	public void setCountAndDop(int count, String dop) {
 		this.count = count;
 		this.dop = dop;
 	}
-	
+
 	@Override
 	public String toString() {
-        return super.toString() + separator + dopColor.getRGB() + separator + arrow + separator + counterweight + separator + count + separator + dop;
-    }
+		return super.toString() + separator + dopColor.getRGB() + separator + arrow + separator + counterweight
+				+ separator + count + separator + dop;
+	}
 }

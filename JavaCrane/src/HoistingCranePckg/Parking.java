@@ -104,7 +104,7 @@ public class Parking<T extends ICrane, I extends IRink> {
 		}
 		return null;
 	}
-	
+
 	public void clear() {
 		_places.clear();
 	}

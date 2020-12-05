@@ -202,117 +202,117 @@ public class ParkingForm {
 		});
 		btnRemoveFromStack.setBounds(1215, 381, 101, 47);
 		frame.getContentPane().add(btnRemoveFromStack);
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBounds(10, 10, 1086, 22);
 		frame.getContentPane().add(menuBar);
-		
+
 		JMenu fileMenu = new JMenu("Файл");
-        menuBar.add(fileMenu);
-        
-        JMenuItem menuItemSave = new JMenuItem("Сохранить");
-        menuItemSave.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ev) {
-            	JFileChooser fileChooser = new JFileChooser();
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("Text File", "txt");
-                fileChooser.setFileFilter(filter);
-                int result = fileChooser.showDialog(frame, "Сохраннить парковки");
-                if (result == JFileChooser.APPROVE_OPTION) {
-                    String filename = fileChooser.getSelectedFile().toString();
-                    if (filename.contains(".txt")) {
-                        try {
-        					parkingCollection.saveData(filename);
-        				} catch (IOException e) {
-        					e.printStackTrace();
-        				}
-                    } else {
-                    	try {
-        					parkingCollection.saveData(filename + ".txt");
-        				} catch (IOException e) {
-        					e.printStackTrace();
-        				}
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(frame, "Не удалось сохранить файл");
-                }
-            }
-        });
-        fileMenu.add(menuItemSave);
-        
-        JMenuItem menuItemLoad = new JMenuItem("Загрузить");
-        menuItemLoad.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ev) {
-            	 JFileChooser fileChooser = new JFileChooser();
-                 FileNameExtensionFilter filter = new FileNameExtensionFilter("Text File", "txt");
-                 fileChooser.setFileFilter(filter);
-                 int result = fileChooser.showOpenDialog(frame);
-                 if (result == JFileChooser.APPROVE_OPTION) {
-                     String filename = fileChooser.getSelectedFile().toString();
-                     try {
+		menuBar.add(fileMenu);
+
+		JMenuItem menuItemSave = new JMenuItem("Сохранить");
+		menuItemSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				JFileChooser fileChooser = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("Text File", "txt");
+				fileChooser.setFileFilter(filter);
+				int result = fileChooser.showDialog(frame, "Сохраннить парковки");
+				if (result == JFileChooser.APPROVE_OPTION) {
+					String filename = fileChooser.getSelectedFile().toString();
+					if (filename.contains(".txt")) {
+						try {
+							parkingCollection.saveData(filename);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					} else {
+						try {
+							parkingCollection.saveData(filename + ".txt");
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				} else {
+					JOptionPane.showMessageDialog(frame, "Не удалось сохранить файл");
+				}
+			}
+		});
+		fileMenu.add(menuItemSave);
+
+		JMenuItem menuItemLoad = new JMenuItem("Загрузить");
+		menuItemLoad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				JFileChooser fileChooser = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("Text File", "txt");
+				fileChooser.setFileFilter(filter);
+				int result = fileChooser.showOpenDialog(frame);
+				if (result == JFileChooser.APPROVE_OPTION) {
+					String filename = fileChooser.getSelectedFile().toString();
+					try {
 						parkingCollection.loadData(filename);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-                     reloadLevels();
-                     frame.repaint();
-                 } else {
-                     JOptionPane.showMessageDialog(frame, "Не удалось загрузить файл");
-                 }
-            }
-        });
-        fileMenu.add(menuItemLoad);
-        
-        JMenuItem menuItemSaveSeparateParking = new JMenuItem("Сохранить текущую парковку");
-        menuItemSaveSeparateParking.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ev) {
-            	JFileChooser fileChooser = new JFileChooser();
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("Text File", "txt");
-                fileChooser.setFileFilter(filter);
-                int result = fileChooser.showDialog(frame, "Сохраннить парковку");
-                if (result == JFileChooser.APPROVE_OPTION) {
-                    String filename = fileChooser.getSelectedFile().toString();
-                    if (filename.contains(".txt")) {
-                        try {
-        					parkingCollection.saveSeparateParking(filename, listParkings.getSelectedValue());
-        				} catch (IOException e) {
-        					e.printStackTrace();
-        				}
-                    } else {
-                    	try {
-        					parkingCollection.saveSeparateParking(filename + ".txt", listParkings.getSelectedValue());
-        				} catch (IOException e) {
-        					e.printStackTrace();
-        				}
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(frame, "Не удалось сохранить файл");
-                }
-            }
-        });
-        fileMenu.add(menuItemSaveSeparateParking);
-        
-        JMenuItem menuItemLoadSeparateParking = new JMenuItem("Загрузить отдельную парковку");
-        menuItemLoadSeparateParking.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ev) {
-            	 JFileChooser fileChooser = new JFileChooser();
-                 FileNameExtensionFilter filter = new FileNameExtensionFilter("Text File", "txt");
-                 fileChooser.setFileFilter(filter);
-                 int result = fileChooser.showOpenDialog(frame);
-                 if (result == JFileChooser.APPROVE_OPTION) {
-                     String filename = fileChooser.getSelectedFile().toString();
-                     try {
+					reloadLevels();
+					frame.repaint();
+				} else {
+					JOptionPane.showMessageDialog(frame, "Не удалось загрузить файл");
+				}
+			}
+		});
+		fileMenu.add(menuItemLoad);
+
+		JMenuItem menuItemSaveSeparateParking = new JMenuItem("Сохранить текущую парковку");
+		menuItemSaveSeparateParking.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				JFileChooser fileChooser = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("Text File", "txt");
+				fileChooser.setFileFilter(filter);
+				int result = fileChooser.showDialog(frame, "Сохраннить парковку");
+				if (result == JFileChooser.APPROVE_OPTION) {
+					String filename = fileChooser.getSelectedFile().toString();
+					if (filename.contains(".txt")) {
+						try {
+							parkingCollection.saveSeparateParking(filename, listParkings.getSelectedValue());
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					} else {
+						try {
+							parkingCollection.saveSeparateParking(filename + ".txt", listParkings.getSelectedValue());
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				} else {
+					JOptionPane.showMessageDialog(frame, "Не удалось сохранить файл");
+				}
+			}
+		});
+		fileMenu.add(menuItemSaveSeparateParking);
+
+		JMenuItem menuItemLoadSeparateParking = new JMenuItem("Загрузить отдельную парковку");
+		menuItemLoadSeparateParking.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				JFileChooser fileChooser = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("Text File", "txt");
+				fileChooser.setFileFilter(filter);
+				int result = fileChooser.showOpenDialog(frame);
+				if (result == JFileChooser.APPROVE_OPTION) {
+					String filename = fileChooser.getSelectedFile().toString();
+					try {
 						parkingCollection.loadSeparateParking(filename);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-                     reloadLevels();
-                     frame.repaint();
-                 } else {
-                     JOptionPane.showMessageDialog(frame, "Не удалось загрузить файл");
-                 }
-            }
-        });
-        fileMenu.add(menuItemLoadSeparateParking);
+					reloadLevels();
+					frame.repaint();
+				} else {
+					JOptionPane.showMessageDialog(frame, "Не удалось загрузить файл");
+				}
+			}
+		});
+		fileMenu.add(menuItemLoadSeparateParking);
 
 		frame.repaint();
 	}
