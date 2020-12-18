@@ -54,7 +54,7 @@ public class ParkingForm {
 
 	public ParkingForm() {
 
-		logger =  Logger.getLogger(ParkingForm.class);
+		logger = Logger.getLogger(ParkingForm.class);
 		PropertyConfigurator.configure("log4j.properties");
 
 		platformStack = new Stack<>();
@@ -253,9 +253,13 @@ public class ParkingForm {
 		btnRemoveFromStack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (!platformStack.isEmpty()) {
+					logger.info("Кран извлечен из стека " + platformStack.peek().toString());
 					CraneForm form = new CraneForm();
 					form.setCrane(Objects.requireNonNull(platformStack.pop()));
 					panel.repaint();
+				} else {
+					logger.warn("Стек пуст");
+					JOptionPane.showMessageDialog(frame, "Стек пуст");
 				}
 			}
 		});
@@ -415,6 +419,9 @@ public class ParkingForm {
 				logger.fatal("Неизвестная ошибка");
 				JOptionPane.showMessageDialog(frame, "Неизвестная ошибка");
 			}
+		} else {
+			logger.warn("Кран не может быть добавлен");
+			JOptionPane.showMessageDialog(frame, "Кран не может быть добавлен");
 		}
 	}
 
