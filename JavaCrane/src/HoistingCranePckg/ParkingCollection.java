@@ -148,7 +148,7 @@ public class ParkingCollection {
 			}
 			fw.close();
 		} else {
-			throw new NullPointerException();
+			 throw new NullPointerException();
 		}
 	}
 

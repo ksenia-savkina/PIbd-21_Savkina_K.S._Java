@@ -435,6 +435,9 @@ public class ParkingForm {
 				logger.fatal("Неизвестная ошибка");
 				JOptionPane.showMessageDialog(frame, "Неизвестная ошибка");
 			}
+		} else {
+			logger.warn("Кран не может быть добавлен");
+			JOptionPane.showMessageDialog(frame, "Кран не может быть добавлен");
 		}
 	}
 
