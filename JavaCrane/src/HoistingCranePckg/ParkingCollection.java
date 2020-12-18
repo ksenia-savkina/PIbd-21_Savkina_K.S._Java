@@ -1,5 +1,6 @@
 package HoistingCranePckg;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
+import Exceptions.ParkingOverflowException;
 import Interfaces.ICrane;
 import Interfaces.IRink;
 
@@ -63,7 +65,7 @@ public class ParkingCollection {
 		return null;
 	}
 
-	public boolean saveData(String filename) throws IOException {
+	public void saveData(String filename) throws IOException {
 		FileWriter fw = new FileWriter(filename);
 		fw.write("ParkingCollection\n");
 		for (String level : parkingStages.keySet()) {
@@ -80,10 +82,9 @@ public class ParkingCollection {
 			}
 		}
 		fw.close();
-		return true;
 	}
 
-	public boolean loadData(String filename) throws IOException {
+	public void loadData(String filename) throws IOException, ParkingOverflowException {
 		FileReader fr = new FileReader(filename);
 		Scanner scanner = new Scanner(fr);
 		String line;
@@ -114,7 +115,7 @@ public class ParkingCollection {
 				}
 				var result = parkingStages.get(key).addition(crane);
 				if (!result) {
-					return false;
+					throw new NullPointerException();
 				}
 				if (scanner.hasNextLine()) {
 					line = scanner.nextLine();
@@ -123,12 +124,12 @@ public class ParkingCollection {
 				}
 			}
 			fr.close();
-			return true;
+		} else {
+			throw new FileNotFoundException();
 		}
-		return false;
 	}
 
-	public boolean saveSeparateParking(String filename, String name) throws IOException {
+	public void saveSeparateParking(String filename, String name) throws IOException {
 		if (parkingStages.containsKey(name)) {
 			FileWriter fw = new FileWriter(filename);
 			fw.write("ParkingCollection\n");
@@ -145,12 +146,12 @@ public class ParkingCollection {
 				fw.write(crane + "\n");
 			}
 			fw.close();
-			return true;
+		} else {
+			 throw new NullPointerException();
 		}
-		return false;
 	}
 
-	public boolean loadSeparateParking(String filename) throws IOException {
+	public void loadSeparateParking(String filename) throws IOException, ParkingOverflowException {
 		FileReader fr = new FileReader(filename);
 		Scanner scanner = new Scanner(fr);
 		String line;
@@ -184,7 +185,7 @@ public class ParkingCollection {
 				}
 				var result = parkingStages.get(key).addition(crane);
 				if (!result) {
-					return false;
+					throw new NullPointerException();
 				}
 				if (scanner.hasNextLine()) {
 					line = scanner.nextLine();
@@ -193,8 +194,8 @@ public class ParkingCollection {
 				}
 			}
 			fr.close();
-			return true;
+		} else {
+			throw new FileNotFoundException();
 		}
-		return false;
 	}
 }
