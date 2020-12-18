@@ -21,6 +21,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import Exceptions.ParkingAlreadyHaveException;
 import org.apache.log4j.Logger;
 
 import Exceptions.CraneNotFoundException;
@@ -211,7 +212,6 @@ public class ParkingForm {
 					logger.warn("Стоянка не выбрана");
 					JOptionPane.showMessageDialog(frame, "Стоянка не выбрана", "Ошибка", JOptionPane.ERROR_MESSAGE);
 				}
-
 			}
 		});
 		btnDelParking.setBounds(1140, 236, 136, 20);
@@ -383,6 +383,19 @@ public class ParkingForm {
 		});
 		fileMenu.add(menuItemLoadSeparateParking);
 
+		JButton btnSort = new JButton("Сортировать");
+		btnSort.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (listParkings.getSelectedIndex() > -1) {
+					parkingCollection.get(listParkings.getSelectedValue()).sort();
+					panel.repaint();
+					logger.info("Сортировка уровней");
+				}
+			}
+		});
+		btnSort.setBounds(1138, 600, 153, 30);
+		frame.getContentPane().add(btnSort);
+
 		frame.repaint();
 	}
 
@@ -412,6 +425,9 @@ public class ParkingForm {
 					logger.info("Кран не удалось поставить");
 					JOptionPane.showMessageDialog(frame, "Кран не удалось поставить");
 				}
+			} catch (ParkingAlreadyHaveException ex) {
+				logger.error("Дублирование");
+				JOptionPane.showMessageDialog(frame, "Дублирование");
 			} catch (ParkingOverflowException ex) {
 				logger.error("Переполнение");
 				JOptionPane.showMessageDialog(frame, "Стоянка переполнена");
@@ -419,9 +435,6 @@ public class ParkingForm {
 				logger.fatal("Неизвестная ошибка");
 				JOptionPane.showMessageDialog(frame, "Неизвестная ошибка");
 			}
-		} else {
-			logger.warn("Кран не может быть добавлен");
-			JOptionPane.showMessageDialog(frame, "Кран не может быть добавлен");
 		}
 	}
 

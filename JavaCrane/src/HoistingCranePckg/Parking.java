@@ -5,14 +5,17 @@ import java.awt.Graphics;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Comparator;
 
 import Exceptions.CraneNotFoundException;
+import Exceptions.ParkingAlreadyHaveException;
 import Exceptions.ParkingOverflowException;
 import Interfaces.ICrane;
 import Interfaces.IRink;
 
 public class Parking<T extends ICrane, I extends IRink> {
 
+	public CraneComparer craneComparator = new CraneComparer();
 	// Список объектов, которые храним
 	private final List<T> _places;
 	// Максимальное количество мест на стоянке
@@ -42,9 +45,12 @@ public class Parking<T extends ICrane, I extends IRink> {
 	// Логика действия: на стоянку добавляется кран
 	// "p" Стоянка
 	// "crane" Добавляемый кран
-	public boolean addition(T crane) throws ParkingOverflowException {
+	public boolean addition(T crane) throws ParkingOverflowException, ParkingAlreadyHaveException {
 		if (_places.size() >= _maxCount) {
 			throw new ParkingOverflowException();
+		}
+		if (_places.contains(crane)) {
+			throw new ParkingAlreadyHaveException();
 		}
 		_places.add(crane);
 		return true;
@@ -109,5 +115,9 @@ public class Parking<T extends ICrane, I extends IRink> {
 
 	public void clear() {
 		_places.clear();
+	}
+
+	public void sort() {
+		_places.sort(craneComparator);
 	}
 }
