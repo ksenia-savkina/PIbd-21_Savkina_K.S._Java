@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
+import Exceptions.ParkingAlreadyHaveException;
 import Exceptions.ParkingOverflowException;
 import Interfaces.ICrane;
 import Interfaces.IRink;
@@ -84,7 +85,7 @@ public class ParkingCollection {
 		fw.close();
 	}
 
-	public void loadData(String filename) throws IOException, ParkingOverflowException {
+	public void loadData(String filename) throws IOException, ParkingOverflowException, ParkingAlreadyHaveException {
 		FileReader fr = new FileReader(filename);
 		Scanner scanner = new Scanner(fr);
 		String line;
@@ -151,7 +152,8 @@ public class ParkingCollection {
 		}
 	}
 
-	public void loadSeparateParking(String filename) throws IOException, ParkingOverflowException {
+	public void loadSeparateParking(String filename)
+			throws IOException, ParkingOverflowException, ParkingAlreadyHaveException {
 		FileReader fr = new FileReader(filename);
 		Scanner scanner = new Scanner(fr);
 		String line;
