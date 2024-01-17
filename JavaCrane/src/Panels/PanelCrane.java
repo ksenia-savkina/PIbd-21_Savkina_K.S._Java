@@ -1,33 +1,28 @@
-package HoistingCranePckg;
+package Panels;
 
 import java.awt.Graphics;
+
 import javax.swing.JPanel;
+
 import Interfaces.ICrane;
 
 public class PanelCrane extends JPanel {
 	private ICrane crane;
-	private boolean canDraw;
+	private boolean craneIsSet;
 
-	public PanelCrane(boolean CanDraw) {
-		canDraw = CanDraw;
+	public PanelCrane(boolean craneIsSet) {
+		this.craneIsSet = craneIsSet;
 	}
 
 	public void setCrane(ICrane crane) {
 		this.crane = crane;
-	}
-
-	public boolean drawCan(boolean can) {
-		canDraw = can;
-		if (canDraw == false) {
-			return false;
-		}
-		return true;
+		craneIsSet = true;
 	}
 
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		if (canDraw == true) {
+		if (craneIsSet) {
 			crane.drawCrane(g);
 		}
 	}

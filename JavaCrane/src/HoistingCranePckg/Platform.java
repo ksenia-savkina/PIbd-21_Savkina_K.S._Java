@@ -2,7 +2,9 @@ package HoistingCranePckg;
 
 import java.awt.Color;
 import java.awt.Graphics;
+
 import Enums.Direction;
+
 import Interfaces.ICrane;
 
 public abstract class Platform implements ICrane {
@@ -30,5 +32,9 @@ public abstract class Platform implements ICrane {
 		_pictureWidth = width;
 		_startPosX = x;
 		_startPosY = y;
+	}
+
+	public void setMainColor(Color color) {
+		mainColor = color;
 	}
 }
