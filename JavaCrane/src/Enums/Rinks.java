@@ -1,4 +1,4 @@
-package HoistingCranePckg;
+package Enums;
 
 public enum Rinks {
 	Four, Five, Six;
