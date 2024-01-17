@@ -1,16 +1,23 @@
-package HoistingCranePckg;
+package Frames;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
 import Enums.Direction;
+
+import HoistingCranePckg.HoistingCrane;
+import HoistingCranePckg.TrackedVehicle;
+
 import Interfaces.ICrane;
-import Interfaces.IRink;
+
+import Panels.PanelCrane;
 
 public class CraneForm {
 
@@ -18,7 +25,6 @@ public class CraneForm {
 	private JTextField txtCount;
 	private JLabel label;
 	private ICrane crane;
-	private IRink rink;
 	private PanelCrane panel;
 	private Integer k;
 
@@ -59,8 +65,9 @@ public class CraneForm {
 		btnCreateHoistingCrane.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				k = rnd(4, 6);
-				createObj("<html>Количетсво катков в гусеницах:</html>", k.toString(),
-						new HoistingCrane(rnd(1, 3), rnd(25, 50), Color.green, Color.gray, true, true, k, 0),
+				createObj(
+						"<html>Количетсво катков в гусеницах:</html>", k.toString(), new HoistingCrane(rnd(1, 3),
+								rnd(25, 50), Color.green, Color.gray, true, true, k, "Обыкновенные катки"),
 						rnd(230, 325));
 			}
 		});
@@ -111,39 +118,36 @@ public class CraneForm {
 		btnDown.setIcon(new ImageIcon("img/down.jpg"));
 		frame.getContentPane().add(btnDown);
 
-		JButton btnAddDopRinks1 = new JButton("<html>Добавить фигуры на катках</html>");
+		JButton btnAddDopRinks1 = new JButton("<html>Добавить круги на катках</html>");
 		btnAddDopRinks1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				k = rnd(1, 2);
-				String str;
-				if (k == 1)
-					str = "Круг";
-				else
-					str = "Квадрат";
-				createObj("<html>Тип фигуры</html>", str,
-						new HoistingCrane(rnd(1, 3), rnd(25, 50), Color.green, Color.gray, true, true, k, 1),
-						rnd(230, 325));
+				createObj("<html>Тип фигуры</html>", "Круг", new HoistingCrane(rnd(1, 3), rnd(25, 50), Color.green,
+						Color.gray, true, true, k, "Круги на катках"), rnd(230, 325));
 			}
 		});
 		btnAddDopRinks1.setBounds(12, 302, 89, 59);
 		frame.getContentPane().add(btnAddDopRinks1);
 
-		JButton btnAddDopRinks2 = new JButton("<html>Добавить орнаменты на катках</html>");
+		JButton btnAddDopRinks2 = new JButton("<html>Добавить орнамент №1 на катках</html>");
 		btnAddDopRinks2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				k = rnd(1, 2);
-				String str;
-				if (k == 1)
-					str = "Орнамент № 1";
-				else
-					str = "Орнамент № 2";
-				createObj("<html>Тип орнамента</html>", str,
-						new HoistingCrane(rnd(1, 3), rnd(25, 50), Color.green, Color.gray, true, true, k, 2),
-						rnd(230, 325));
+				createObj("<html>Тип орнамента</html>", "№1", new HoistingCrane(rnd(1, 3), rnd(25, 50), Color.green,
+						Color.gray, true, true, k, "Орнамент №1 на катках"), rnd(230, 325));
 			}
 		});
-		btnAddDopRinks2.setBounds(11, 366, 89, 59);
+		btnAddDopRinks2.setBounds(11, 366, 89, 90);
 		frame.getContentPane().add(btnAddDopRinks2);
+
+		JButton btnAddDopRinks3 = new JButton("<html>Добавить орнамент №2 на катках</html>");
+		btnAddDopRinks3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				createObj("<html>Тип орнамента</html>", "№2", new HoistingCrane(rnd(1, 3), rnd(25, 50), Color.green,
+						Color.gray, true, true, k, "Орнамент №2 на катках"), rnd(230, 325));
+			}
+		});
+		btnAddDopRinks3.setBounds(11, 467, 89, 90);
+		frame.getContentPane().add(btnAddDopRinks3);
+
 		frame.repaint();
 	}
 
@@ -153,7 +157,6 @@ public class CraneForm {
 		panel.setCrane(crane);
 		crane.setPosition(rnd(0, 100), rnd(230, 325), panel.getWidth(), panel.getHeight());
 		panel.repaint();
-		frame.repaint();
 	}
 
 	private void createObj(String textLbl, String textTxtFld, ICrane hcrane, int craneY) {

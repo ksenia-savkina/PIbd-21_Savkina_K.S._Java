@@ -2,13 +2,20 @@ package HoistingCranePckg;
 
 import java.awt.Color;
 import java.awt.Graphics;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Comparator;
+
+import Exceptions.CraneNotFoundException;
+import Exceptions.ParkingAlreadyHaveException;
+import Exceptions.ParkingOverflowException;
 import Interfaces.ICrane;
 import Interfaces.IRink;
 
 public class Parking<T extends ICrane, I extends IRink> {
-	
+
+	public CraneComparer craneComparator = new CraneComparer();
 	// Список объектов, которые храним
 	private final List<T> _places;
 	// Максимальное количество мест на стоянке
@@ -38,9 +45,12 @@ public class Parking<T extends ICrane, I extends IRink> {
 	// Логика действия: на стоянку добавляется кран
 	// "p" Стоянка
 	// "crane" Добавляемый кран
-	public boolean addition(T crane) {
+	public boolean addition(T crane) throws ParkingOverflowException, ParkingAlreadyHaveException {
 		if (_places.size() >= _maxCount) {
-			return false;
+			throw new ParkingOverflowException();
+		}
+		if (_places.contains(crane)) {
+			throw new ParkingAlreadyHaveException();
 		}
 		_places.add(crane);
 		return true;
@@ -50,9 +60,9 @@ public class Parking<T extends ICrane, I extends IRink> {
 	// Логика действия: с парковки забираем кран
 	// "p" Стоянка
 	// "index" Индекс места, с которого пытаемся извлечь объект
-	public T subtraction(int index) {
-		if (index < -1 || index > _places.size()) {
-			return null;
+	public T subtraction(int index) throws CraneNotFoundException {
+		if (index < -1 || index >= _places.size()) {
+			throw new CraneNotFoundException(index);
 		}
 		T crane = _places.get(index);
 		_places.remove(index);
@@ -87,7 +97,7 @@ public class Parking<T extends ICrane, I extends IRink> {
 		int interval = 35;
 		g.setColor(Color.black);
 		for (int i = 0; i < pictureWidth / _placeSizeWidth; i++) {
-			for (int j = 0; j < pictureHeight / _placeSizeHeight + 1; ++j) {// линия рамзетки места
+			for (int j = 0; j < pictureHeight / _placeSizeHeight + 1; ++j) {// линия разметки места
 				g.drawLine(x + (_placeSizeWidth + interval) * i, j * _placeSizeHeight,
 						x + _placeSizeWidth + (_placeSizeWidth + interval) * i, j * _placeSizeHeight);
 			}
@@ -101,5 +111,13 @@ public class Parking<T extends ICrane, I extends IRink> {
 			return _places.get(index);
 		}
 		return null;
+	}
+
+	public void clear() {
+		_places.clear();
+	}
+
+	public void sort() {
+		_places.sort(craneComparator);
 	}
 }
