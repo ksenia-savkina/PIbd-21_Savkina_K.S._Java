@@ -1,6 +1,8 @@
 package Interfaces;
 
+import java.awt.Color;
 import java.awt.Graphics;
+
 import Enums.Direction;
 
 public interface ICrane {
@@ -17,4 +19,7 @@ public interface ICrane {
 
 	// Отрисовка
 	void drawCrane(Graphics g);
+
+	// Смена основного цвета
+	void setMainColor(Color color);
 }

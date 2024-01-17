@@ -1,7 +1,9 @@
-package HoistingCranePckg;
+package Panels;
 
 import java.awt.Graphics;
+
 import javax.swing.JPanel;
+
 import Interfaces.ICrane;
 
 public class PanelCrane extends JPanel {
